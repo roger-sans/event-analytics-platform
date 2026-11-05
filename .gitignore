@@ -1,0 +1,15 @@
+# Local-generated data and secrets
+.env
+.env.*
+!.env.example
+*.ndjson
+*.expected.json
+node_modules/
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+evidence/
+.tmp/
+*.log
+.DS_Store

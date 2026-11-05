@@ -1,0 +1,24 @@
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    environment:
+      GCP_PROJECT_ID: local-event-analytics
+      PUBSUB_TOPIC_ID: app-events
+      PUBSUB_EMULATOR_HOST: pubsub:8085
+      PORT: 8080
+      BIGQUERY_DATASET: event_analytics
+    ports:
+      - '127.0.0.1:8080:8080'
+    depends_on:
+      - pubsub
+    command: sleep infinity
+  pubsub:
+    image: gcr.io/google.com/cloudsdktool/google-cloud-cli:emulators
+    command: gcloud beta emulators pubsub start --project=local-event-analytics --host-port=0.0.0.0:8085
+    ports:
+      - '127.0.0.1:8085:8085'
